@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
+import ResumeDocumentPicker from "../../../../components/ResumeDocumentPicker";
 
 const DetailPage = () => {
   const params = useLocalSearchParams();
@@ -26,36 +27,39 @@ const DetailPage = () => {
   return (
     <View style={styles.container}>
       <ScrollView
-        contentContainerStyle={{ flex: 1, height: "100%" }}
-        style={{ flex: 1, height: "100%" }}
+        contentContainerStyle={{ flex: 1, gap: 5 }}
+        style={{ flex: 1 }}
         showsVerticalScrollIndicator={true}
       >
-        <Text style={styles.titleText}>{companyName}</Text>
-        <Image src={companyLogo} style={styles.companyLogo} />
-        <Text style={styles.mainText1}>
-          Company Name: <Text style={styles.subText1}>{companyName}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          About: <Text style={styles.subText1}>{about}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          Description: <Text style={styles.subText1}>{description}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          License: <Text style={styles.subText1}>{license}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          Industry Type: <Text style={styles.subText1}>{industryType}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          Website: <Text style={styles.subText1}>{website}</Text>
-        </Text>
-        <Text style={styles.mainText1}>
-          Joined At:{" "}
-          <Text style={styles.subText1}>
-            {new Date(createdAt).toLocaleString()}
+        <>
+          <Text style={styles.titleText}>{companyName}</Text>
+          <Image source={{ uri: companyLogo }} style={styles.companyLogo} />
+          <Text style={styles.mainText1}>
+            Company Name: <Text style={styles.subText1}>{companyName}</Text>
           </Text>
-        </Text>
+          <Text style={styles.mainText1}>
+            About: <Text style={styles.subText1}>{about}</Text>
+          </Text>
+          <Text style={styles.mainText1}>
+            Description: <Text style={styles.subText1}>{description}</Text>
+          </Text>
+          <Text style={styles.mainText1}>
+            License:
+            <ResumeDocumentPicker pdfUrl={license} disableUpload />
+          </Text>
+          <Text style={styles.mainText1}>
+            Industry Type: <Text style={styles.subText1}>{industryType}</Text>
+          </Text>
+          <Text style={styles.mainText1}>
+            Website: <Text style={styles.subText1}>{website}</Text>
+          </Text>
+          <Text style={styles.mainText1}>
+            Joined At:{" "}
+            <Text style={styles.subText1}>
+              {new Date(createdAt).toLocaleString()}
+            </Text>
+          </Text>
+        </>
       </ScrollView>
       <Pressable
         style={styles.backBtn}
