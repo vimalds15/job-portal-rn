@@ -28,10 +28,9 @@ const getJobById = async (jobId) => {
 };
 
 const getJobsByCompany = async (companyId) => {
-  const job = await Job.find({ companyId }).populate(
-    "companyId",
-    "companyName userName"
-  );
+  const job = await Job.find({ companyId })
+    .populate("companyId", "companyName userName")
+    .sort({ createdAt: -1 });
   if (!job) {
     throw new Error("Job not found");
   }
