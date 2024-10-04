@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 export const AuthContext = createContext();
@@ -7,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -25,7 +25,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, role, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, role, login, logout, error, setError }}
+    >
       {children}
     </AuthContext.Provider>
   );

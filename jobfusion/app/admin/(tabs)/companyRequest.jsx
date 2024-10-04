@@ -2,6 +2,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -10,6 +11,7 @@ import {
   getUnverifiedCompanies,
   updateCompany,
 } from "../../../services/api/companyService";
+import ResumeDocumentPicker from "../../../components/ResumeDocumentPicker";
 
 const DashboardPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -29,6 +31,13 @@ const DashboardPage = () => {
         isVerified: "Accepted",
       };
       const response = await updateCompany(companyId, payload);
+      ToastAndroid.showWithGravity(
+        "Accepted Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       const updatedCompanies = companies.filter(
         (company) => company._id != companyId
       );
@@ -43,6 +52,13 @@ const DashboardPage = () => {
         isVerified: "Rejected",
       };
       const response = await updateCompany(companyId, payload);
+      ToastAndroid.showWithGravity(
+        "Rejected Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       const updatedCompanies = companies.filter(
         (company) => company._id != companyId
       );
@@ -69,10 +85,11 @@ const DashboardPage = () => {
                     Phone Number:{" "}
                     <Text style={styles.subText1}>{company.landline}</Text>
                   </Text>
-                  <Text style={styles.mainText1}>
-                    License:{" "}
-                    <Text style={styles.subText1}>{company.license}</Text>
-                  </Text>
+                  <Text style={styles.mainText1}>License: </Text>
+                  <ResumeDocumentPicker
+                    pdfUrl={company.license}
+                    disableUpload
+                  />
 
                   <View style={styles.ctaContainer}>
                     <TouchableOpacity

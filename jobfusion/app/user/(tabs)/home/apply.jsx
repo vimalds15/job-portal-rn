@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -10,6 +11,7 @@ import React, { useContext, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { UserContext } from "../../../../services/context/UserContext";
 import { createApplication } from "../../../../services/api";
+import ResumeDocumentPicker from "../../../../components/ResumeDocumentPicker";
 
 const ApplyPage = () => {
   const [fullName, setFullName] = useState("");
@@ -17,6 +19,8 @@ const ApplyPage = () => {
   const [coverLetter, setCoverLetter] = useState("");
   const [resume, setResume] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
 
   const params = useLocalSearchParams();
   const { userInfo } = useContext(UserContext);
@@ -34,27 +38,38 @@ const ApplyPage = () => {
   console.log("params", params);
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const payload = {
-        applicantName: fullName,
-        coverLetter,
-        age,
-        companyId: fetchedCompanyId,
-        jobId: _id,
-        userId,
-        resume,
-        jobTitle: title,
-        companyUserName: fetchedUserName,
-        companyName: fetchedCompanyName,
-      };
+    if (fullName && age && coverLetter && resume) {
+      try {
+        setLoading(true);
+        const payload = {
+          applicantName: fullName,
+          coverLetter,
+          age,
+          companyId: fetchedCompanyId,
+          jobId: _id,
+          userId,
+          resume,
+          jobTitle: title,
+          companyUserName: fetchedUserName,
+          companyName: fetchedCompanyName,
+        };
 
-      const response = await createApplication(payload);
-      setLoading(false);
-      router.replace("/user/home");
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
+        const response = await createApplication(payload);
+        ToastAndroid.showWithGravity(
+          "Applied Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        setLoading(false);
+        router.replace("/user/home");
+      } catch (error) {
+        setLoading(false);
+        console.error(error);
+      }
+    } else {
+      setError("Please fill All fields");
     }
   };
 
@@ -96,13 +111,7 @@ const ApplyPage = () => {
           </View>
           <View>
             <Text style={styles.label}>Resume</Text>
-            <TextInput
-              value={resume}
-              onChangeText={(val) => setResume(val)}
-              placeholder="Paste your resume link"
-              placeholderTextColor={"#919191"}
-              style={styles.textInput}
-            />
+            <ResumeDocumentPicker pdfUrl={resume} setPdfUrl={setResume} />
           </View>
         </View>
         <View style={styles.ctaContainer}>
@@ -112,6 +121,13 @@ const ApplyPage = () => {
             </TouchableOpacity>
           ) : (
             <ActivityIndicator />
+          )}
+          {error && (
+            <Text
+              style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}
+            >
+              {error}
+            </Text>
           )}
         </View>
       </View>

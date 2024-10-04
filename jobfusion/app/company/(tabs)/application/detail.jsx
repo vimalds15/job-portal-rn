@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -11,6 +12,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import Dropdown from "../../../../components/DropDown";
 import { updateApplication } from "../../../../services/api";
 import { ApplicationContext } from "../../../../services/context/ApplicationContext";
+import ResumeDocumentPicker from "../../../../components/ResumeDocumentPicker";
 
 const DetailPage = () => {
   const { applications, setApplications } = useContext(ApplicationContext);
@@ -40,13 +42,20 @@ const DetailPage = () => {
         feedback,
       };
       const response = await updateApplication(applicationId, payload);
+      ToastAndroid.showWithGravity(
+        "Saved Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       const updatedApplication = response.application;
       const updatedApplications = applications.map((application) =>
         application._id === applicationId ? updatedApplication : application
       );
       setApplications(updatedApplications);
       setLoading(false);
-      router.replace('/company/application')
+      router.replace("/company/application");
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -76,9 +85,8 @@ const DetailPage = () => {
             </Text>
           </View>
           <View>
-            <Text style={styles.label}>
-              Resume: <Text style={styles.subText}>{resume}</Text>
-            </Text>
+            <Text style={styles.label}>Resume:</Text>
+            <ResumeDocumentPicker pdfUrl={resume} disableUpload />
           </View>
           <View>
             <Text style={styles.label}>Cover Letter:</Text>
@@ -88,7 +96,7 @@ const DetailPage = () => {
             <Text style={styles.label}>Status: </Text>
             <Dropdown value={status} setValue={setStatus} />
           </View>
-          <View style={{marginTop:50}}>
+          <View style={{ marginTop: 50 }}>
             <Text style={styles.label}>Feedback:</Text>
             <TextInput
               value={feedback}

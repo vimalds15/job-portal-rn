@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from "react-native";
 import React, { useContext, useState } from "react";
@@ -44,6 +45,13 @@ const CompanyProfilePage = () => {
         location,
       };
       const response = await updateJob(jobId, updatedData);
+      ToastAndroid.showWithGravity(
+        "Saved Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       const updatedJob = response.data; // Assuming API response contains the updated job object
 
       const updatedJobs = jobs.map((job) =>

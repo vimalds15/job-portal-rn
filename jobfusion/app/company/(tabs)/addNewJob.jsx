@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from "react-native";
 import React, { useContext, useState } from "react";
@@ -19,6 +20,7 @@ const AddNewJob = () => {
   const [salary, setSalary] = useState("");
   const [preference, setPreference] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { jobs, updateJobs } = useContext(JobContext);
 
   const { companyInfo } = useContext(CompanyContext);
@@ -27,6 +29,7 @@ const AddNewJob = () => {
     try {
       setLoading(true);
       if (jobTitle && jobDescription && location && salary && preference) {
+        setError("");
         const { companyName, _id: companyId, companyLogo } = companyInfo;
         const userData = {
           title: jobTitle,
@@ -39,6 +42,13 @@ const AddNewJob = () => {
           companyId,
         };
         const response = await createJob(userData);
+        ToastAndroid.showWithGravity(
+          "Created Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
         const newJob = response.data;
         const updatedJobs = [...jobs, newJob];
         updateJobs(updatedJobs);
@@ -47,6 +57,8 @@ const AddNewJob = () => {
         setLocation("");
         setSalary("");
         setPreference("");
+      } else {
+        setError("Please fill all the fields");
       }
       setLoading(false);
     } catch (error) {
@@ -104,6 +116,13 @@ const AddNewJob = () => {
           </TouchableOpacity>
         ) : (
           <ActivityIndicator style={{ marginTop: 20 }} />
+        )}
+        {error && (
+          <Text
+            style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}
+          >
+            {error}
+          </Text>
         )}
       </ScrollView>
     </View>

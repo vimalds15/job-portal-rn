@@ -6,7 +6,13 @@ const createJob = async (jobData) => {
 };
 
 const getAllJobs = async () => {
-  return await Job.find().populate("companyId", "companyName userName");
+  return await Job.find()
+    .populate({
+      path: "companyId",
+      select: "companyName userName isVerified",
+      match: { isVerified: "Accepted" },
+    })
+    .sort({ createdAt: -1 });
 };
 
 const getJobById = async (jobId) => {

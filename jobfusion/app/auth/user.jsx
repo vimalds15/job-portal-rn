@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
@@ -18,22 +19,41 @@ const UserSignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const payload = {
-        userName,
-        email,
-        password,
-        role: "user",
-      };
-      const response = await register(payload);
-      setLoading(false);
-      router.replace("/auth/login");
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+    if (userName && email && password) {
+      try {
+        setLoading(true);
+        const payload = {
+          userName,
+          email,
+          password,
+          role: "user",
+        };
+        const response = await register(payload);
+        ToastAndroid.showWithGravity(
+          "Registered Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        setLoading(false);
+        router.replace("/auth/login");
+      } catch (error) {
+        ToastAndroid.showWithGravity(
+          "User Already Exists",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        setLoading(false);
+        console.log(error);
+      }
+    } else {
+      setError("Please fill all the details");
     }
   };
 
@@ -95,6 +115,12 @@ const UserSignupPage = () => {
         </>
       ) : (
         <ActivityIndicator style={{ marginTop: 20 }} />
+      )}
+
+      {error && (
+        <Text style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}>
+          {error}
+        </Text>
       )}
     </View>
   );

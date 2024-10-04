@@ -24,7 +24,7 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  const { login: loginContext } = useContext(AuthContext);
+  const { login: loginContext, error, setError } = useContext(AuthContext);
 
   const { updateCompanyInfo } = useContext(CompanyContext);
   const { updateUserInfo } = useContext(UserContext);
@@ -32,6 +32,7 @@ const LoginPage = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      setError("");
       const response = await login(userName, password);
       const role = response.token.role;
       loginContext(role);
@@ -41,10 +42,18 @@ const LoginPage = () => {
       } else if (role === "company") {
         updateCompanyInfo(response.token.details);
       }
+      ToastAndroid.showWithGravity(
+        "Logged in Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       router.push(`/${role}/(tabs)`);
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      setError(error.message);
       console.log(error);
     }
   };
@@ -55,6 +64,7 @@ const LoginPage = () => {
       <Text style={styles.titleText}>Login</Text>
       <View style={styles.infoContainer}>
         <View style={styles.infoWrapper}>
+          {error && <Text style={{ color: "#dc0a0a" }}>{error}</Text>}
           <Text style={styles.label}>Username</Text>
           <TextInput
             value={userName}

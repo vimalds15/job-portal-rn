@@ -23,8 +23,6 @@ const DetailPage = () => {
     createdAt,
   } = params;
 
-  console.log(params);
-
   return (
     <View style={styles.container}>
       <ScrollView

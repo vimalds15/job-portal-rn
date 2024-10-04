@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -12,6 +13,8 @@ import { TouchableOpacity } from "react-native";
 import { UserContext } from "../../../services/context/UserContext";
 import { getUser, updateUser } from "../../../services/api";
 import { AuthContext } from "../../../services/context/AuthContext";
+import ProfileImagePicker from "../../../components/ProfileImagePicker";
+import ResumeDocumentPicker from "../../../components/ResumeDocumentPicker";
 
 const ProfilePage = () => {
   const {
@@ -35,7 +38,6 @@ const ProfilePage = () => {
 
   const { logout } = useContext(AuthContext);
 
-  const [profileImage, setProfileImage] = useState(fprofileImage);
   const [fullName, setFullName] = useState(ffullName);
   const [age, setAge] = useState(fage);
   const [course, setCourse] = useState(fcourse);
@@ -48,6 +50,7 @@ const ProfilePage = () => {
   const [collegeMarks, setCollegeMarks] = useState(fcollegeMarks);
   const [resume, setResume] = useState(fresume);
   const [loading, setLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState(fprofileImage);
 
   const handleSubmit = async () => {
     try {
@@ -69,6 +72,13 @@ const ProfilePage = () => {
       };
 
       const response = await updateUser(userId, payload);
+      ToastAndroid.showWithGravity(
+        "Profile updated Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -86,12 +96,7 @@ const ProfilePage = () => {
         <Text style={styles.titleText}>Update Your Profile</Text>
         <View>
           <Text style={styles.label}>Profile Image</Text>
-          <TextInput
-            value={profileImage}
-            onChangeText={(val) => setProfileImage(val)}
-            style={styles.textInput}
-          />
-          <Image src={profileImage} style={{ height: 150 }} />
+          <ProfileImagePicker image={profileImage} setImage={setProfileImage} />
         </View>
         <View>
           <Text style={styles.label}>Full Name</Text>
@@ -175,13 +180,7 @@ const ProfilePage = () => {
         </View>
         <View>
           <Text style={styles.label}>Resume</Text>
-          <TextInput
-            value={resume}
-            onChangeText={(val) => setResume(val)}
-            placeholder="Paste your resume link"
-            placeholderTextColor={"#919191"}
-            style={styles.textInput}
-          />
+          <ResumeDocumentPicker pdfUrl={resume} setPdfUrl={setResume} />
         </View>
       </ScrollView>
       {!loading ? (
@@ -189,7 +188,7 @@ const ProfilePage = () => {
           <Text style={styles.btnText}>Update Profile</Text>
         </TouchableOpacity>
       ) : (
-        <ActivityIndicator style={{marginTop:10}} />
+        <ActivityIndicator style={{ marginTop: 10 }} />
       )}
       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
         <Text style={styles.btnText}>Logout</Text>

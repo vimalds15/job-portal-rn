@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from "react-native";
 import React, { useContext, useState } from "react";
@@ -12,6 +13,8 @@ import { TouchableOpacity } from "react-native";
 import { CompanyContext } from "../../../services/context/CompanyContext";
 import { updateCompany } from "../../../services/api";
 import { AuthContext } from "../../../services/context/AuthContext";
+import ProfileImagePicker from "../../../components/ProfileImagePicker";
+import ResumeDocumentPicker from "../../../components/ResumeDocumentPicker";
 
 const CompanyProfilePage = () => {
   const { companyInfo } = useContext(CompanyContext);
@@ -54,6 +57,13 @@ const CompanyProfilePage = () => {
       };
 
       await updateCompany(companyId, updatedData);
+      ToastAndroid.showWithGravity(
+        "Profile updated Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -79,13 +89,7 @@ const CompanyProfilePage = () => {
         </View>
         <View>
           <Text style={styles.label}>Company Logo</Text>
-          <TextInput
-            value={companyLogo}
-            onChangeText={(val) => setCompanyLogo(val)}
-            style={styles.textInput}
-            placeholder={companyLogo}
-          />
-          <Image src={companyLogo} style={{ height: 150 }} />
+          <ProfileImagePicker image={companyLogo} setImage={setCompanyLogo} />
         </View>
         <View>
           <Text style={styles.label}>Landline Number</Text>
@@ -131,12 +135,7 @@ const CompanyProfilePage = () => {
         </View>
         <View>
           <Text style={styles.label}>Company License</Text>
-          <TextInput
-            value={license}
-            onChangeText={(val) => setLicense(val)}
-            style={styles.textInput}
-            placeholder="Paste your license url"
-          />
+          <ResumeDocumentPicker pdfUrl={license} setPdfUrl={setLicense} />
         </View>
       </ScrollView>
       {!loading ? (

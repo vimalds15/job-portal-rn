@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
@@ -17,21 +18,33 @@ const AdminSignUpPage = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const payload = {
-        userName,
-        password,
-        role: "admin",
-      };
-      const response = await register(payload);
-      router.replace("/auth/login");
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+    if (userName && password) {
+      try {
+        setLoading(true);
+        const payload = {
+          userName,
+          password,
+          role: "admin",
+        };
+        const response = await register(payload);
+        ToastAndroid.showWithGravity(
+          "Registered Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        router.replace("/auth/login");
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    } else {
+      setError("Please fill all the details");
     }
   };
   return (
@@ -79,6 +92,12 @@ const AdminSignUpPage = () => {
         </>
       ) : (
         <ActivityIndicator style={{ marginTop: 15 }} />
+      )}
+
+      {error && (
+        <Text style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}>
+          {error}
+        </Text>
       )}
     </View>
   );
