@@ -42,7 +42,7 @@ const LoginPage = () => {
       } else if (role === "company") {
         updateCompanyInfo(response.token.details);
       }
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Logged in Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

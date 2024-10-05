@@ -30,7 +30,7 @@ const AdminSignUpPage = () => {
           role: "admin",
         };
         const response = await register(payload);
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "Registered Successfully",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,

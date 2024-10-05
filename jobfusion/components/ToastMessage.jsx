@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 const ToastMessage = (message) => {
   useEffect(() => {
-    ToastAndroid.showWithGravityAndOffset(
+    ToastAndroid?.showWithGravityAndOffset(
       message,
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,

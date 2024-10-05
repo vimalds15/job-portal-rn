@@ -38,7 +38,7 @@ const CompanySignupPage = () => {
           role: "company",
         };
         const response = await register(userData);
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "Registered Successfully",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
@@ -49,7 +49,7 @@ const CompanySignupPage = () => {
         setLoading(false);
         router.push("/auth/login");
       } catch (error) {
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "User Already Exists",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,

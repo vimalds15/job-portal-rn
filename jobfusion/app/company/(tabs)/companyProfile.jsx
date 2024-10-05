@@ -57,7 +57,7 @@ const CompanyProfilePage = () => {
       };
 
       await updateCompany(companyId, updatedData);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Profile updated Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

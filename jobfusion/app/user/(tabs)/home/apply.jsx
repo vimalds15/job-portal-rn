@@ -55,7 +55,7 @@ const ApplyPage = () => {
         };
 
         const response = await createApplication(payload);
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "Applied Successfully",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,

@@ -31,7 +31,7 @@ const DashboardPage = () => {
         isVerified: "Accepted",
       };
       const response = await updateCompany(companyId, payload);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Accepted Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,
@@ -52,7 +52,7 @@ const DashboardPage = () => {
         isVerified: "Rejected",
       };
       const response = await updateCompany(companyId, payload);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Rejected Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

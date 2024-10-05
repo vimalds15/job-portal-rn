@@ -32,7 +32,7 @@ const UserSignupPage = () => {
           role: "user",
         };
         const response = await register(payload);
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "Registered Successfully",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
@@ -42,7 +42,7 @@ const UserSignupPage = () => {
         setLoading(false);
         router.replace("/auth/login");
       } catch (error) {
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "User Already Exists",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,

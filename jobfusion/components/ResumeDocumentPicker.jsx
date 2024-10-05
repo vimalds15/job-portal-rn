@@ -30,7 +30,7 @@ const ResumeDocumentPicker = ({
       let source = { uri, type, name };
       console.log(source);
       await uploadPDF(source);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Uploaded Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

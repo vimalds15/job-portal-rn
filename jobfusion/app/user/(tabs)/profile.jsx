@@ -72,7 +72,7 @@ const ProfilePage = () => {
       };
 
       const response = await updateUser(userId, payload);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Profile updated Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

@@ -45,7 +45,7 @@ const CompanyProfilePage = () => {
         location,
       };
       const response = await updateJob(jobId, updatedData);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Saved Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

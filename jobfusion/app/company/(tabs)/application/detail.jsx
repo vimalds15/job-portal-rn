@@ -42,7 +42,7 @@ const DetailPage = () => {
         feedback,
       };
       const response = await updateApplication(applicationId, payload);
-      ToastAndroid.showWithGravity(
+      ToastAndroid?.showWithGravity(
         "Saved Successfully",
         ToastAndroid.LONG,
         ToastAndroid.BOTTOM,

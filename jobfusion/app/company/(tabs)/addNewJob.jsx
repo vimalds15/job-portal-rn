@@ -42,7 +42,7 @@ const AddNewJob = () => {
           companyId,
         };
         const response = await createJob(userData);
-        ToastAndroid.showWithGravity(
+        ToastAndroid?.showWithGravity(
           "Created Successfully",
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
