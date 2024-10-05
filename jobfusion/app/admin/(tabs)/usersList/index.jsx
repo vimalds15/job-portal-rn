@@ -38,7 +38,7 @@ const DashboardPage = () => {
                 asChild
               >
                 <TouchableOpacity style={styles.userContainer}>
-                  <Text>{user.fullName}</Text>
+                  <Text>{user.fullName || user.userName}</Text>
                 </TouchableOpacity>
               </Link>
             ))}

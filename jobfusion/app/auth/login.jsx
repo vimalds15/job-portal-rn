@@ -21,6 +21,7 @@ const LoginPage = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [notCompleted, setNotCompleted] = useState("");
 
   const router = useRouter();
 
@@ -30,31 +31,35 @@ const LoginPage = () => {
   const { updateUserInfo } = useContext(UserContext);
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const response = await login(userName, password);
-      const role = response.token.role;
-      loginContext(role);
+    if (userName && password) {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await login(userName, password);
+        const role = response.token.role;
+        loginContext(role);
 
-      if (role === "user") {
-        updateUserInfo(response.token.details);
-      } else if (role === "company") {
-        updateCompanyInfo(response.token.details);
+        if (role === "user") {
+          updateUserInfo(response.token.details);
+        } else if (role === "company") {
+          updateCompanyInfo(response.token.details);
+        }
+        ToastAndroid?.showWithGravity(
+          "Logged in Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        router.push(`/${role}/(tabs)`);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError(error.message);
+        console.log(error);
       }
-      ToastAndroid?.showWithGravity(
-        "Logged in Successfully",
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        0,
-        100
-      );
-      router.push(`/${role}/(tabs)`);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
-      console.log(error);
+    } else {
+      setNotCompleted("Please fill all the detail");
     }
   };
 
@@ -106,6 +111,12 @@ const LoginPage = () => {
         </>
       ) : (
         <ActivityIndicator style={{ marginTop: 10 }} />
+      )}
+
+      {notCompleted && (
+        <Text style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}>
+          {notCompleted}
+        </Text>
       )}
     </View>
   );

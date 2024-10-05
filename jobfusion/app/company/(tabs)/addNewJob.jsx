@@ -37,7 +37,7 @@ const AddNewJob = () => {
           companyLogo,
           companyName,
           location,
-          salary: "company",
+          salary,
           preference,
           companyId,
         };

@@ -12,13 +12,14 @@ import { Link, useLocalSearchParams } from "expo-router";
 const DetailPage = () => {
   const params = useLocalSearchParams();
 
-  const { fullName, email, createdAt } = params;
+
+  const { fullName, email, createdAt, userName } = params;
 
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
-          <Text style={styles.titleText}>{fullName}</Text>
+          <Text style={styles.titleText}>{fullName || userName}</Text>
           <Text style={styles.mainText1}>
             Full Name: <Text style={styles.subText1}>{fullName}</Text>
           </Text>

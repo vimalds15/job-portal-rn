@@ -9,7 +9,7 @@ import {
 import React, { useContext, useState } from "react";
 import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { updateJob } from "../../../../services/api";
+import { deleteJob, updateJob } from "../../../../services/api";
 import { router, useLocalSearchParams } from "expo-router";
 import { JobContext } from "../../../../services/context/JobContext";
 
@@ -66,6 +66,28 @@ const CompanyProfilePage = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    try {
+      setLoading(true);
+      await deleteJob(jobId);
+      ToastAndroid?.showWithGravity(
+        "Deleted Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
+
+      const updatedJobs = jobs.filter((job) => job._id !== jobId);
+      updateJobs(updatedJobs);
+      setLoading(false);
+      router.replace("/company/dashboard");
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -112,9 +134,14 @@ const CompanyProfilePage = () => {
         </View>
       </ScrollView>
       {!loading ? (
-        <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
-          <Text style={styles.btnText}>Update Job Details</Text>
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+            <Text style={styles.btnText}>Update Job Details</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteBtn} onPress={deleteHandler}>
+            <Text style={styles.btnText}>Delete Job</Text>
+          </TouchableOpacity>
+        </>
       ) : (
         <ActivityIndicator />
       )}
@@ -160,6 +187,13 @@ const styles = StyleSheet.create({
   },
   logoutBtn: {
     backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    marginTop: 20,
+  },
+  deleteBtn: {
+    backgroundColor: "#111",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,

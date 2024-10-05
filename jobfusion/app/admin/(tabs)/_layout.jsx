@@ -7,7 +7,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="dashboard"
         options={{
-          title: "Dashboard",
+          title: "Admin Dashboard",
+          headerTitleAlign: "center",
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
@@ -17,6 +18,8 @@ export default function TabLayout() {
         name="usersList"
         options={{
           title: "Users",
+          headerTitleAlign: "center",
+
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="users" size={size} color={color} />
           ),
@@ -26,6 +29,8 @@ export default function TabLayout() {
         name="companies"
         options={{
           title: "Companies",
+          headerTitleAlign: "center",
+
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="building" size={size} color={color} />
           ),
@@ -35,6 +40,8 @@ export default function TabLayout() {
         name="companyRequest"
         options={{
           title: "Requests",
+          headerTitleAlign: "center",
+
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="clock-o" size={size} color={color} />
           ),
@@ -44,6 +51,7 @@ export default function TabLayout() {
         name="logout"
         options={{
           title: "Logout",
+          headerTitleAlign: "center",
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="user" size={size} color={color} />
           ),

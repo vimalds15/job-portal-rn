@@ -1,25 +1,20 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   getAllApplications,
   getAllCompanies,
   getAllJobs,
   getAllUsers,
-} from "../../../services/api";
+} from "../../../../services/api";
+import AdminPieChart from "../../../../components/AdminPieChart";
+import { router } from "expo-router";
 
 const DashboardPage = () => {
   const [users, setUsers] = useState(0);
   const [companies, setCompanies] = useState(0);
   const [jobPostings, setJobPostings] = useState(0);
   const [applications, setApplications] = useState(0);
+  const [notifications, setNotifications] = useState([]);
 
   const fetchJobData = async () => {
     const jobs = await getAllJobs();
@@ -30,6 +25,7 @@ const DashboardPage = () => {
     setUsers(userData.users.length);
     setCompanies(companyData.companies.length);
     setApplications(applicationData.applications.length);
+    setNotifications(applicationData.applications);
     setJobPostings(jobs.data.length);
     console.log(jobs, userData, companyData, applicationData);
   };
@@ -38,26 +34,67 @@ const DashboardPage = () => {
     fetchJobData();
   }, []);
 
+  const acceptedApplications =
+    notifications?.filter((notification) => notification.status === "Accepted")
+      .length || 1;
+  const rejectedApplications =
+    notifications?.filter((notification) => notification.status === "Rejected")
+      .length || 1;
+
+  console.log(acceptedApplications, rejectedApplications);
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.jobContainer}>
-            <Text style={styles.title}>Total Users</Text>
             <Text style={styles.subTitle}>{users}</Text>
+            <Text style={styles.title}>Total Users</Text>
+            <Pressable
+              style={styles.btnContainer}
+              onPress={() => router.push("/admin/usersList")}
+            >
+              <Text style={{ color: "#fff" }}>Manage Users</Text>
+            </Pressable>
           </View>
           <View style={styles.jobContainer}>
-            <Text style={styles.title}>Total Companies</Text>
             <Text style={styles.subTitle}>{companies}</Text>
+            <Text style={styles.title}>Total Companies</Text>
+            <Pressable
+              style={styles.btnContainer}
+              onPress={() => router.push("/admin/companies")}
+            >
+              <Text style={{ color: "#fff" }}>Manage Companies</Text>
+            </Pressable>
           </View>
           <View style={styles.jobContainer}>
-            <Text style={styles.title}>Total Job Postings</Text>
             <Text style={styles.subTitle}>{jobPostings}</Text>
+            <Text style={styles.title}>Total Job Postings</Text>
+            <Pressable
+              style={styles.btnContainer}
+              onPress={() => router.push("/admin/dashboard/detail")}
+            >
+              <Text style={{ color: "#fff" }}>Manage Job Postings</Text>
+            </Pressable>
           </View>
           <View style={styles.jobContainer}>
-            <Text style={styles.title}>Total Applications</Text>
             <Text style={styles.subTitle}>{applications}</Text>
+            <Text style={styles.title}>Total Applications</Text>
+            <Pressable style={styles.btnContainer}>
+              <Text style={{ color: "#fff" }}>Manage Applications</Text>
+            </Pressable>
           </View>
+          <View style={styles.jobContainer}>
+            <Text style={styles.subTitle}>
+              Total Applications: {applications}
+            </Text>
+            <Text style={styles.subTitle}>Total Users: {users}</Text>
+          </View>
+          <AdminPieChart
+            accepted={acceptedApplications}
+            rejected={rejectedApplications}
+            notApplied={acceptedApplications / 2}
+          />
         </View>
       </ScrollView>
     </View>
@@ -85,6 +122,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "#e6e6e6",
+    minHeight: 140,
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
   acceptedContainer: {
     backgroundColor: "#048e39",
@@ -100,10 +140,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 5,
+    textAlign: "center",
   },
   subTitle: {
     fontSize: 24,
     fontWeight: "600",
+    textAlign: "center",
   },
   companyInfo: {
     backgroundColor: "#dad9d9",
@@ -169,5 +211,13 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: "#fff",
+  },
+  btnContainer: {
+    backgroundColor: "#1757f7",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
