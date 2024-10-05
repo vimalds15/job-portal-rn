@@ -65,5 +65,7 @@ const styles = StyleSheet.create({
     height: 150,
     objectFit: "contain",
     marginTop: 15,
+    borderWidth: 2,
+    borderColor: "#c1c1c1",
   },
 });
