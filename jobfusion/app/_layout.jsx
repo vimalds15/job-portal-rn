@@ -14,7 +14,9 @@ export default function RootLayout() {
             <ApplicationProvider>
               <Stack
                 initialRouteName="user/(tabs)"
-                screenOptions={{ headerShown: false }}
+                screenOptions={{
+                  headerShown: false,
+                }}
               >
                 <Stack.Screen name="user/(tabs)" />
                 <Stack.Screen name="auth" />

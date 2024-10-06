@@ -24,11 +24,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: "Job Fusion",
-      headerTitleAlign: "center",
-      headerLeft: null,
-    });
     fetchData();
   }, []);
 

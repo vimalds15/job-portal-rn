@@ -1,14 +1,17 @@
 import {
+  ActivityIndicator,
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../../../../services/context/CompanyContext";
-import { getJobByCompanyId } from "../../../../services/api";
+import { deleteJob, getJobByCompanyId } from "../../../../services/api";
 import { Link } from "expo-router";
 import { getAllApplicationsCompany } from "../../../../services/api/applicationService";
 import { JobContext } from "../../../../services/context/JobContext";
@@ -16,6 +19,7 @@ import { JobContext } from "../../../../services/context/JobContext";
 const DashboardPage = () => {
   const [applications, setApplications] = useState([]);
   const { jobs, updateJobs } = useContext(JobContext);
+  const [loading, setLoading] = useState(false);
 
   const { companyInfo = {} } = useContext(CompanyContext);
   const {
@@ -41,6 +45,27 @@ const DashboardPage = () => {
   useEffect(() => {
     fetchJobData();
   }, []);
+
+  const deleteHandler = async (jobId) => {
+    try {
+      setLoading(true);
+      await deleteJob(jobId);
+      ToastAndroid?.showWithGravity(
+        "Deleted Successfully",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        0,
+        100
+      );
+
+      const updatedJobs = jobs.filter((job) => job._id !== jobId);
+      updateJobs(updatedJobs);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
 
   const acceptedApplicants = applications?.filter(
     (application) => application.status === "Accepted"
@@ -82,9 +107,7 @@ const DashboardPage = () => {
               </Text>
               <Text style={styles.mainText}>About the Company</Text>
 
-              <Text>
-                {about}
-              </Text>
+              <Text>{about}</Text>
             </View>
           </View>
 
@@ -116,17 +139,29 @@ const DashboardPage = () => {
                     </Text>
                   </Text>
                   <View style={styles.ctaContainer}>
-                    <Link
-                      href={{
-                        pathname: "/company/dashboard/edit",
-                        params: job,
-                      }}
-                      asChild
-                    >
-                      <TouchableOpacity style={styles.editBtn}>
-                        <Text>Edit</Text>
-                      </TouchableOpacity>
-                    </Link>
+                    {!loading ? (
+                      <>
+                        <Link
+                          href={{
+                            pathname: "/company/dashboard/edit",
+                            params: job,
+                          }}
+                          asChild
+                        >
+                          <TouchableOpacity style={styles.editBtn}>
+                            <Text>Edit</Text>
+                          </TouchableOpacity>
+                        </Link>
+                        <Pressable
+                          style={styles.deleteBtn}
+                          onPress={() => deleteHandler(job._id)}
+                        >
+                          <Text style={styles.deleteText}>Delete</Text>
+                        </Pressable>
+                      </>
+                    ) : (
+                      <ActivityIndicator />
+                    )}
                   </View>
                 </View>
               </View>

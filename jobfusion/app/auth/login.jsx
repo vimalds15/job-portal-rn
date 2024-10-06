@@ -8,7 +8,7 @@ import {
   ToastAndroid,
 } from "react-native";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import Logo from "../../assets/logo.png";
 import { Link, useRouter } from "expo-router";
@@ -62,6 +62,8 @@ const LoginPage = () => {
       setNotCompleted("Please fill all the detail");
     }
   };
+
+  
 
   return (
     <View style={styles.container}>

@@ -23,37 +23,45 @@ const UserSignupPage = () => {
 
   const handleSubmit = async () => {
     if (userName && email && password) {
-      try {
-        setLoading(true);
-        const payload = {
-          userName,
-          email,
-          password,
-          role: "user",
-        };
-        const response = await register(payload);
-        ToastAndroid?.showWithGravity(
-          "Registered Successfully",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          0,
-          100
-        );
-        setLoading(false);
-        router.replace("/auth/login");
-      } catch (error) {
-        ToastAndroid?.showWithGravity(
-          "User Already Exists",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          0,
-          100
-        );
-        setLoading(false);
-        console.log(error);
+      if (email) {
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(email) === false) {
+          setError("Invalid Email Format");
+          return false;
+        } else {
+          try {
+            setLoading(true);
+            const payload = {
+              userName,
+              email,
+              password,
+              role: "user",
+            };
+            const response = await register(payload);
+            ToastAndroid?.showWithGravity(
+              "Registered Successfully",
+              ToastAndroid.LONG,
+              ToastAndroid.BOTTOM,
+              0,
+              100
+            );
+            setLoading(false);
+            router.replace("/auth/login");
+          } catch (error) {
+            ToastAndroid?.showWithGravity(
+              "User Already Exists",
+              ToastAndroid.LONG,
+              ToastAndroid.BOTTOM,
+              0,
+              100
+            );
+            setLoading(false);
+            console.log(error);
+          }
+        }
+      } else {
+        setError("Please fill all the details");
       }
-    } else {
-      setError("Please fill all the details");
     }
   };
 

@@ -63,7 +63,6 @@ const ApplyPage = () => {
           100
         );
         setLoading(false);
-        router.replace("/user/home");
       } catch (error) {
         setLoading(false);
         console.error(error);

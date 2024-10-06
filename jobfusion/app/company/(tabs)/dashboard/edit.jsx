@@ -33,36 +33,40 @@ const CompanyProfilePage = () => {
   const [preference, setPreference] = useState(fpreference);
   const [description, setDescription] = useState(fdescription);
   const [location, setLocation] = useState(flocation);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const updatedData = {
-        title,
-        salary,
-        preference,
-        description,
-        location,
-      };
-      const response = await updateJob(jobId, updatedData);
-      ToastAndroid?.showWithGravity(
-        "Saved Successfully",
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        0,
-        100
-      );
-      const updatedJob = response.data; // Assuming API response contains the updated job object
+    if (title && salary && preference && description && location) {
+      try {
+        setLoading(true);
+        const updatedData = {
+          title,
+          salary,
+          preference,
+          description,
+          location,
+        };
+        const response = await updateJob(jobId, updatedData);
+        ToastAndroid?.showWithGravity(
+          "Saved Successfully",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          100
+        );
+        const updatedJob = response.data; // Assuming API response contains the updated job object
 
-      const updatedJobs = jobs.map((job) =>
-        job._id === jobId ? updatedJob : job
-      );
-      updateJobs(updatedJobs);
-      setLoading(false);
-      router.replace("/company/dashboard");
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
+        const updatedJobs = jobs.map((job) =>
+          job._id === jobId ? updatedJob : job
+        );
+        updateJobs(updatedJobs);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error(error);
+      }
+    } else {
+      setError("Please fill all the details");
     }
   };
 
@@ -144,6 +148,12 @@ const CompanyProfilePage = () => {
         </>
       ) : (
         <ActivityIndicator />
+      )}
+
+      {error && (
+        <Text style={{ marginTop: 10, color: "#cc0808", textAlign: "center" }}>
+          {error}
+        </Text>
       )}
     </View>
   );

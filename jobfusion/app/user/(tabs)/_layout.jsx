@@ -1,5 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { Image, Text, View } from "react-native";
+import Logo from "../../../assets/logo.png";
 
 export default function TabLayout() {
   return (
@@ -15,10 +17,16 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Home",
+          headerTitle: "Job Fusion",
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
-          headerShown: false,
+          headerLeft: () => (
+            <Image
+              source={Logo}
+              style={{ height: 50, width: 50, marginLeft: 20 }}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -28,6 +36,12 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="bell" size={size} color={color} />
           ),
+          headerLeft: () => (
+            <Image
+              source={Logo}
+              style={{ height: 50, width: 50, marginLeft: 20 }}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -36,6 +50,12 @@ export default function TabLayout() {
           title: "Profile",
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="user" size={size} color={color} />
+          ),
+          headerLeft: () => (
+            <Image
+              source={Logo}
+              style={{ height: 50, width: 50, marginLeft: 20 }}
+            />
           ),
         }}
       />

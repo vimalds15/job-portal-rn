@@ -93,7 +93,7 @@ const DashboardPage = () => {
           <AdminPieChart
             accepted={acceptedApplications}
             rejected={rejectedApplications}
-            notApplied={acceptedApplications / 2}
+            notApplied={Math.ceil(acceptedApplications / 2)}
           />
         </View>
       </ScrollView>
