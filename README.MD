@@ -46,84 +46,84 @@ An Application to manage placements in your college.
 
 #### Login Page
 
-<img src="screenshots/login.png" style="width:150" />
+<img src="screenshots/login.png" width="150px" />
 
 #### Registration Page
 
-<img src="screenshots/register.png" style="width:150" />
+<img src="screenshots/register.png" width="150px" />
 
 #### User Home Page
 
-<img src="screenshots/userhome.png" style="width:150" />
+<img src="screenshots/userhome.png" width="150px" />
 
 #### Job Details Page
 
-<img src="screenshots/jobdetails.png" style="width:150" />
+<img src="screenshots/jobdetails.png" width="150px" />
 
 #### Job Application Page
 
-<img src="screenshots/applyjob.png" style="width:150" />
+<img src="screenshots/applyjob.png" width="150px" />
 
 #### Notifications Page
 
-<img src="screenshots/notifications.png" style="width:150" />
+<img src="screenshots/notifications.png" width="150px" />
 
 #### User Profile Page
 
-<img src="screenshots/userprofile.png" style="width:150" />
+<img src="screenshots/userprofile.png" width="150px" />
 
 ### Company
 
 #### Company Dashboard Page
 
-<img src="screenshots/company.png" style="width:150" />
+<img src="screenshots/company.png" width="150px" />
 
 #### Company Dashboard More
 
-<img src="screenshots/company2.png" style="width:150" />
+<img src="screenshots/company2.png" width="150px" />
 
 #### Add Jobs
 
-<img src="screenshots/addjob.png" style="width:150" />
+<img src="screenshots/addjob.png" width="150px" />
 
 #### Edit Job
 
-<img src="screenshots/editjob.png" style="width:150" />
+<img src="screenshots/editjob.png" width="150px" />
 
 #### Manage Applicants
 
-<img src="screenshots/applications.png" style="width:150" />
+<img src="screenshots/applications.png" width="150px" />
 
 #### Applicant Detail
 
-<img src="screenshots/applicationdetail.png" style="width:150" />
+<img src="screenshots/applicationdetail.png" width="150px" />
 
 #### Company Profile
 
-<img src="screenshots/profile.png" style="width:150" />
+<img src="screenshots/profile.png" width="150px" />
 
 ### Admin
 
 ### Admin Dashboard
 
-<img src="screenshots/admin.png" style="width:150" />
+<img src="screenshots/admin.png" width="150px" />
 
 ### Admin Dashboard More
 
-<img src="screenshots/admin2.png" style="width:150" />
+<img src="screenshots/admin2.png" width="150px" />
 
 ### Admin Users
 
-<img src="screenshots/users.png" style="width:150" />
+<img src="screenshots/users.png" width="150px" />
 
 ### Admin Companies
 
-<img src="screenshots/companies.png" style="width:150" />
+<img src="screenshots/companies.png" width="150px" />
 
 ### Admin Jobs
 
-<img src="screenshots/adminjob.png" style="width:150" />
+<img src="screenshots/adminjob.png" width="150px" />
 
 ### Company Requests
 
-<img src="screenshots/companyapproval.png" style="width:150" />
+<img src="screenshots/companyapproval.png" width="150px" />
